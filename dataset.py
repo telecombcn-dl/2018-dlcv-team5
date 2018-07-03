@@ -31,11 +31,8 @@ class InferenceConfig(DatasetConfig):
 
 
 class Dataset(utils.Dataset):
-    def load_dataset(self, class_ids=None, class_map=None, image_path=None):
-        coco = COCO('data/hake/hake-coco.json')
-        image_dir = 'data/hake/images/'
-        if image_path:
-            image_dir = image_path
+    def load_dataset(self, images_path=None, annotations_file=None):
+        coco = COCO(annotations_file)
 
         class_ids = sorted(coco.getCatIds())
         image_ids = list(coco.imgs.keys())
@@ -48,7 +45,7 @@ class Dataset(utils.Dataset):
         for i in image_ids:
             self.add_image(
                 "coco", image_id=i,
-                path=os.path.join(image_dir, coco.imgs[i]['file_name']),
+                path=os.path.join(image_path, coco.imgs[i]['file_name']),
                 width=coco.imgs[i]["width"],
                 height=coco.imgs[i]["height"],
                 annotations=coco.loadAnns(coco.getAnnIds(imgIds=[i], catIds=class_ids, iscrowd=None)))
