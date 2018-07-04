@@ -31,7 +31,7 @@ class InferenceConfig(DatasetConfig):
 
 
 class Dataset(utils.Dataset):
-    def load_dataset(self, images_path=None, annotations_file=None):
+    def load_dataset(self, image_path=None, annotations_file=None):
         coco = COCO(annotations_file)
 
         class_ids = sorted(coco.getCatIds())
